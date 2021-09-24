@@ -1,8 +1,10 @@
+import json
 from datetime import timedelta
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseNotFound, HttpResponse
 from django.views.decorators.http import require_POST, require_GET
 from django.views.decorators.csrf import csrf_exempt
+from django.core.serializers import serialize
 from .models import SurveyUser, Survey, Question, Option
 from .utils import get_test, build_test_from_config, get_options
 from datetime import datetime, timedelta
@@ -29,7 +31,10 @@ def timed_survey(view_fn):
 @csrf_exempt
 @require_POST
 def create(request, test_version_number):
-    data = request.POST
+    if request.content_type == "application/json":
+        data = json.loads(request.body)
+    else:
+        data = request.POST
     user = SurveyUser(
         first_name=data["Name"],
         last_name=data["Surname"],
@@ -54,14 +59,21 @@ def create(request, test_version_number):
 @csrf_exempt
 @require_POST
 def answer(request, _):
-    data = request.POST
+    if request.content_type == "application/json":
+        data = json.loads(request.body)
+    else:
+        data = request.POST
     qid = data["QuestionID"]
     oid = data["OptionID"]
-    question = Question.object.get(qid=qid)
-    option = Option.object.get(oid=oid)
-    question(submitted_option=option)
+    question = Question.objects.get(qid=qid)
+    option = Option.objects.get(oid=oid)
+    question.submitted_option=option
     question.save()
-    return JsonResponse()
+    return JsonResponse({
+        "Status":1,
+        "Message":"Success",
+        "Data":True
+    })
 
 
 @timed_survey
@@ -77,11 +89,27 @@ def next_question(request, survey_id):
     ).order_by('position').first()
     survey.next_question = new_next
     survey.save()
-    return render(
-        request, 
-        'survey_api/question.html', 
-        {
-            "question": current, 
-            "options": options,
+    time_remaining = (
+        survey.start_time 
+      + survey.duration
+      ) - datetime.now(tz=pytz.utc)
+      
+    options = json.loads(serialize(
+        'json', 
+        Option.objects.filter(
+            survey=survey,
+            question=current,
+        )
+    ))
+
+    data = {
+        "Status": 1,
+        "Message": "Success",
+        "Data": {
+            "Id": current.qid,
+            "Text": current.text,
+            "Options": options, 
+            "RemainingSeconds": time_remaining.seconds
         }
-    )
+    }
+    return JsonResponse(data)
