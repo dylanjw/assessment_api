@@ -1,0 +1,11 @@
+<span>
+    {{ question.text }}
+</span>
+
+<select>
+{% for option in options %}
+<option value={{ option.oid }}>
+    {{ option.text }}
+</option>
+{% endfor %}
+</select>

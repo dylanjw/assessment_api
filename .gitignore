@@ -1,0 +1,5 @@
+.vscode
+*.pyc
+*.egg-info
+.python-version
+db.sqlite3

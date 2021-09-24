@@ -1,0 +1,34 @@
+Background:
+Here is an example of a Correlation One data science assessment:
+https://quiz.correlation-one.com/test/data-scientist
+
+The test taker:
+1) fills out basic contact information (first_name, last_name, email)
+2) gets assigned a unique assessment instance / session (ex.
+1d4c9d2b-86d9-4813-a831-dd2bcca9fe96)
+3) gets assessment questions
+4) submits assessment answers
+5) Gets a confirmation when the final assessment has been submitted
+**Note:
+- The assessment session is timed (counting down from 1hr)
+- The assessment session can be continued from another browser window
+- Some of the contents of the question (either body or answer choices) are not
+simply text (some are html, img, etc.)
+
+Your Goal:
+In any language you’d like, recreate a backend (DB and API) that would satisfy
+the basic interaction outlined above. Feel free to deviate/improve upon the exact
+request/response patterns we currently use. The API should return JSON and
+will be tested with Postman. Along with your submission should be a github
+repository, instructions to setup and run locally, and instructions to run any
+included test suite.
+
+Tip: Feel free to take the linked assessment as many times as you’d like and take
+a peek at the networking tab of Chrome's developer panel to see our current
+request/response payload structure.
+Spend as much time on this as you are willing to. We understand many
+candidates are interviewing at multiple companies simultaneously, so we don’t
+expect you to dedicate all of your time to just one.
+If you’re unable to get this challenge to a satisfactory place within a reasonable
+amount of time, write up a summary of your progress so far, including how you’d
+complete it if you had more time. Then submit that along with the code
