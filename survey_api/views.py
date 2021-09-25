@@ -136,6 +136,11 @@ def answer(request, _):
 def next_question(request, survey_id):
     survey = Survey.objects.get(survey_id=survey_id)
     current = survey.next_question
+    if current is None:
+        return JsonResponse(
+            "Status": 0,
+            "Message": "No more questions"
+        )
     options = get_options(current)
     new_next = (
         Question.objects.filter(
