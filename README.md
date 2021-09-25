@@ -10,6 +10,7 @@ python -m venv venv
 . venv/bin/activate
 pip install poetry
 poetry install
+./manage.py migrate
 ```
 
 Running tests:
@@ -26,7 +27,7 @@ Starting the dev server:
 
 ### Endpoints
 
-**POST** api/v1/create/{TestVersion}
+**POST** `api/v1/create/{TestVersion}`
 
 `TestVersion` is an integer representing the which set of test questions to show. At the moment there is only a single set with a single question. For now just use a value of `0`.
 
@@ -36,12 +37,12 @@ Starting the dev server:
 `Email`
 
 **Response Object**
-{"surveyid": <UUID>}
+`{"surveyid": <UUID>}`
 
 
+---
 
-
-**GET** api/v1/{SurveyID}/question
+**GET** `api/v1/{SurveyID}/question`
 
 Retrieves the next question. 
 
@@ -64,9 +65,9 @@ Retrieves the next question.
 ```
 
 
+---
 
-
-**POST** api/v1/{SurveyID}/answer
+**POST** `api/v1/{SurveyID}/answer`
 
 Submit and answer
 
@@ -75,16 +76,16 @@ Parameters:
 `OptionID`
 
 
+---
 
-
-**GET** api/v1/{SurveyID}/end
+**GET** `api/v1/{SurveyID}/end`
 
 Ends the survey, and calculates results. Results are ready after the successful response is received.
 
 
+---
 
-
-**GET** api/v1/{SurveyID}/result
+**GET** `api/v1/{SurveyID}/result`
 
 Retrieve result
 
@@ -113,6 +114,8 @@ Retrieve result
         },
     }
 ```
+
+---
 
 More TODO:
 
