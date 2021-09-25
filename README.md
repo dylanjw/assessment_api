@@ -1,6 +1,25 @@
 # Assessment Survey API
 
-TODOs:
-- [ ] GET->`/test` endpoint should get survey configuration
-- [ ] GET->`/question` endpoint should get question details
-- [ ] make it possible to include images in question prompt
+Requires python 3.9 or above
+
+To set up your environment:
+
+```bash
+# set up a virtual environment
+python -m venv venv
+. venv/bin/activate
+pip instal poetry
+poetry install
+```
+
+Running tests:
+
+```bash
+pytest
+```
+
+Starting the dev server:
+
+```bash
+./manage.py runserver
+```

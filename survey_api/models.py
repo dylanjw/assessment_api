@@ -24,6 +24,14 @@ class Survey(models.Model):
         null=True,
         related_name="survey_next_in"
     )
+    complete = models.BooleanField(default=False)
+    correct_answers = models.IntegerField(null=True)
+    incorrect_answers = models.IntegerField(null=True)
+    empty_answers = models.IntegerField(null=True)
+    time_taken = models.DurationField(null=True)
+    end_time = models.DateTimeField(null=True)
+    ip_address = models.GenericIPAddressField()
+    score = models.IntegerField(null=True)
 
 
 class Question(models.Model):
@@ -31,7 +39,8 @@ class Question(models.Model):
     source_id = models.IntegerField()
     survey = models.ForeignKey(
         'Survey',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name="questions",
     )
     text = models.TextField(max_length=500)
     submitted_option = models.ForeignKey(
